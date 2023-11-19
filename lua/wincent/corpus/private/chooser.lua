@@ -76,17 +76,17 @@ chooser = {
       -- Using util.run here just for consistency, although the truth is this
       -- one is not going to be a bottleneck.
       local args = {
-        'ls-files',
-        '--cached',
-        '--others',
-        '-z',
-        '--',
+        '.',
+        '-type',
+        'f',
+        '-name',
         '*.md',
+        '-print0',
       }
 
       local stdout = {}
 
-      current_search = util.run('git', args, {
+      current_search = util.run('find', args, {
         cwd = corpus_directory,
         on_exit = function(code, signal)
           if code == 0 then
@@ -206,7 +206,7 @@ chooser = {
         '-l',
         '-z',
         '--all-match',
-        '--untracked',
+        '--no-index',
       }
 
       if not smartcase(terms) then
